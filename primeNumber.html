@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>getPrimesInRange</title>
+</head>
+
+<script>
+    function getPrimesInRange(){
+        let inputA = document.getElementById("input-a");
+        let inputB =  document.getElementById("input-b");
+        let parsedA = parseInt(inputA.value);
+        let parsedB = parseInt(inputB.value);
+        let primeNumbers = [];
+        let onlyPrimeNumbers = [];
+         
+        let start = performance.now()
+        for(let i = parsedA; i <= parsedB; i++){
+            let prime = 1;
+            for(let j = 2; j < i; j++){
+                if(i % j == 0){
+                    prime = 0
+                    break;
+                }
+            }
+
+            let end = performance.now()
+            let timeTaken = end-start;
+           
+            if(prime){
+                // end = performance.now();
+                let obj = {
+                    number: i,
+                    result: "Prime",
+                    timeInMs: timeTaken,
+                }
+
+                let obj1 = {
+                    number: i,
+                    timeInMs: timeTaken,
+                }
+                primeNumbers.push(obj)
+                onlyPrimeNumbers.push(obj1);
+            }
+            else{
+                // end = performance.now();
+                let obj = {
+                    number: i,
+                    result: "Normal",
+                    timeInMs: timeTaken
+                }
+                primeNumbers.push(obj)
+            }
+        }
+
+        const table = document.createElement('table');
+        table.style.border = '1px solid black'
+        table.style.backgroundColor = "#B0E0E6"
+        const headerRow = document.createElement('tr');
+        const headers = ['Number', 'Result', 'Time in MS'];
+
+        const table1 = document.createElement('table');
+        table1.style.border = '1px solid black'
+        table1.style.backgroundColor = "#B0E0E6"
+        const headerRow1 = document.createElement('tr');
+        const headers1 = ['Number', 'Time in MS'];
+
+        // Create header cells
+        for (const header of headers) {
+            const cell = document.createElement('th');
+            cell.textContent = header;
+            cell.style.border = '1px solid black';
+            cell.colspan = 6;
+            headerRow.appendChild(cell);
+        }
+
+        for (const header of headers1) {
+            const cell = document.createElement('th');
+            cell.textContent = header;
+            cell.style.border = '1px solid black';
+            cell.colspan = 6;
+            headerRow1.appendChild(cell);
+        }
+
+        table.appendChild(headerRow);
+        table1.appendChild(headerRow1);
+
+        // Create data rows
+        for (const row of primeNumbers) {
+            const dataRow = document.createElement('tr');
+
+            for (const key in row) {
+                const cell = document.createElement('td');
+                cell.textContent = row[key];
+                cell.style.border = '1px solid black';
+                cell.colspan = 6;
+                dataRow.appendChild(cell);
+            }
+
+            table.appendChild(dataRow);
+        }
+
+        for (const row of onlyPrimeNumbers) {
+            const dataRow = document.createElement('tr');
+
+            for (const key in row) {
+                const cell = document.createElement('td');
+                cell.textContent = row[key];
+                cell.style.border = '1px solid black';
+                cell.colspan = 6;
+                dataRow.appendChild(cell);
+            }
+
+            table1.appendChild(dataRow);
+        }
+
+        document.body.appendChild(table);
+        document.body.appendChild(table1);
+    }
+</script>
+<body>
+    <label for="">Input A</label>
+    <input type="text" id="input-a">
+
+    <label for="">Input B</label>
+    <input type="text" id="input-b">
+
+    <button onclick="getPrimesInRange()"> Details </button>
+</body>
+</html>
